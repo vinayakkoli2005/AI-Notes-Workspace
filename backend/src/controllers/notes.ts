@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 export const getNotes = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = (req as any).userId;
-    const { search, tag } = req.query;
+    const { search, tag, archived } = req.query;
 
     let whereClause: any = {
       authorId: userId,
-      isArchived: false,
+      isArchived: archived === 'true' ? true : false,
     };
 
     if (search) {
