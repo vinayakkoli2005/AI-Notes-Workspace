@@ -66,38 +66,54 @@ A full-stack collaborative notes application built with React, Node.js, Prisma, 
 
 ### Prerequisites
 - Node.js 18+
-- A Google Gemini API key (free at [aistudio.google.com](https://aistudio.google.com))
+- A Google Gemini API key — get one free at [aistudio.google.com](https://aistudio.google.com)
 
-### Backend
+### 1. Clone & install
+
+```bash
+# Terminal 1 — Backend
+cd backend
+npm install
+
+# Terminal 2 — Frontend
+cd frontend
+npm install
+```
+
+### 2. Configure environment
+
+Create `backend/.env` (copy from `backend/.env.example`):
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="any_random_secret_string"
+GEMINI_API_KEY="your_gemini_api_key_here"
+PORT=3001
+```
+
+### 3. Set up the database
 
 ```bash
 cd backend
-npm install
-```
-
-Create `backend/.env`:
-```
-DATABASE_URL="file:./prisma/dev.db"
-JWT_SECRET="your_secret_here"
-GEMINI_API_KEY="your_gemini_key_here"
-```
-
-```bash
 npx prisma migrate dev
-npm run dev
-# Runs on http://localhost:3001
 ```
 
-### Frontend
+### 4. Run both servers
 
 ```bash
-cd frontend
-npm install
+# Terminal 1 — Backend (http://localhost:3001)
+cd backend
 npm run dev
-# Runs on http://localhost:5173
+
+# Terminal 2 — Frontend (http://localhost:5173)
+cd frontend
+npm run dev
 ```
 
-Open `http://localhost:5173`, sign up, and start taking notes.
+### 5. Open the app
+
+Go to `http://localhost:5173`, sign up for an account, and start taking notes.
+
+> **Note:** Both servers must be running simultaneously. The frontend proxies API calls to `localhost:3001`.
 
 ## API Endpoints
 

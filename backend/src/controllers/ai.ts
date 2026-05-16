@@ -34,9 +34,10 @@ export const generateSummary = async (req: Request, res: Response): Promise<void
     });
 
     res.status(200).json({ result: summary });
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI summary error:', error);
-    res.status(500).json({ error: 'Failed to generate summary' });
+    const msg = error?.message || error?.toString() || 'Failed to generate summary';
+    res.status(500).json({ error: msg });
   }
 };
 
@@ -69,9 +70,10 @@ export const generateActionItems = async (req: Request, res: Response): Promise<
     });
 
     res.status(200).json({ result: actionItems });
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI action items error:', error);
-    res.status(500).json({ error: 'Failed to extract action items' });
+    const msg = error?.message || error?.toString() || 'Failed to extract action items';
+    res.status(500).json({ error: msg });
   }
 };
 
@@ -104,8 +106,9 @@ export const generateTitle = async (req: Request, res: Response): Promise<void> 
     });
 
     res.status(200).json({ result: title });
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI title error:', error);
-    res.status(500).json({ error: 'Failed to generate title' });
+    const msg = error?.message || error?.toString() || 'Failed to generate title';
+    res.status(500).json({ error: msg });
   }
 };

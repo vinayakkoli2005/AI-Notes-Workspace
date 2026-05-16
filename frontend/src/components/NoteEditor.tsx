@@ -199,8 +199,10 @@ const NoteEditor: React.FC<Props> = ({ noteId, onClose, onUpdate }) => {
         setTitle(data.result);
         showToast('Title updated by AI', 'success');
       }
-    } catch {
-      setAiResult('AI request failed. Check your API key.');
+    } catch (err: any) {
+      const msg = err?.response?.data?.error || err?.message || 'AI request failed';
+      setAiResult(`Error: ${msg}`);
+      showToast(msg, 'error');
     } finally {
       setAiLoading(null);
     }
