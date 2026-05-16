@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  notes         Note[]
+  tags          Tag[]
+  aiLogs        AILog[]
+  createdAt     DateTime  @default(now())
+}
+
+model Note {
+  id            String    @id @default(uuid())
+  title         String    @default("Untitled")
+  content       String    // Using String for SQLite text
+  isArchived    Boolean   @default(false)
+  shareId       String?   @unique
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id])
+  tags          NoteTag[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Tag {
+  id            String    @id @default(uuid())
+  name          String
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  notes         NoteTag[]
+
+  @@unique([name, userId])
+}
+
+model NoteTag {
+  noteId        String
+  tagId         String
+  note          Note      @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  tag           Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([noteId, tagId])
+}
+
+model AILog {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  actionType    String    // 'SUMMARY', 'ACTION_ITEMS', 'TITLE'
+  createdAt     DateTime  @default(now())
+}

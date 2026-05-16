@@ -1,0 +1,436 @@
+/* ── Note Editor Container ──────────────────────────────────────── */
+.note-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-color);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+}
+
+.title-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+}
+
+.title-input::placeholder {
+  color: #475569;
+}
+
+.editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.action-btn.save-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: transparent;
+  color: white;
+}
+
+.action-btn.save-btn:hover {
+  opacity: 0.9;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+}
+
+.icon-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+  flex-wrap: wrap;
+}
+
+.format-btns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.format-btns button {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 5px 7px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.format-btns button:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-color);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 6px;
+}
+
+/* ── AI Buttons ─────────────────────────────────────────────────── */
+.ai-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.ai-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: rgba(139, 92, 246, 0.08);
+  color: #a78bfa;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.ai-btn:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.18);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.ai-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Share Section ───────────────────────────────────────────────── */
+.share-section {
+  margin-left: auto;
+}
+
+.share-url-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.share-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  width: 220px;
+  outline: none;
+}
+
+/* ── AI Result Panel ─────────────────────────────────────────────── */
+.ai-panel {
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(99, 102, 241, 0.05);
+  max-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #a78bfa;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-panel-header button {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+}
+
+.ai-result {
+  overflow-y: auto;
+  padding: 0.75rem 1.25rem;
+  flex: 1;
+}
+
+.ai-result pre {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* ── Editor Loading ──────────────────────────────────────────────── */
+.editor-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+}
+
+/* ── Format button active state ──────────────────────────────────── */
+.format-btns button.active {
+  background: rgba(139, 92, 246, 0.18);
+  color: #a78bfa;
+}
+
+/* ── Editor Body (TipTap wrapper) ────────────────────────────────── */
+.editor-body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* TipTap renders a .tiptap div inside EditorContent */
+.editor-body .tiptap {
+  padding: 1.5rem 1.75rem;
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-color);
+  min-height: 100%;
+}
+
+.editor-body .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #475569;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.editor-body .tiptap ul,
+.editor-body .tiptap ol {
+  padding-left: 1.5rem;
+}
+
+.editor-body .tiptap li {
+  margin-bottom: 0.25rem;
+}
+
+.editor-body .tiptap strong { font-weight: 700; }
+.editor-body .tiptap em { font-style: italic; }
+.editor-body .tiptap s { text-decoration: line-through; color: #64748b; }
+
+.editor-body .tiptap h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; }
+.editor-body .tiptap h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.4rem; }
+.editor-body .tiptap h3 { font-size: 1.1rem;  font-weight: 600; margin-bottom: 0.35rem; }
+
+.editor-body .tiptap blockquote {
+  border-left: 3px solid rgba(139, 92, 246, 0.5);
+  padding-left: 1rem;
+  color: #94a3b8;
+  margin: 0.75rem 0;
+}
+
+.editor-body .tiptap code {
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.88em;
+}
+
+.editor-body .tiptap pre {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.88em;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--card-bg);
+  flex-wrap: wrap;
+}
+
+.tags-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.tag-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  color: #a78bfa;
+  border-radius: 999px;
+  padding: 2px 8px 2px 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.tag-chip button {
+  background: transparent;
+  border: none;
+  color: #a78bfa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: 2px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.tag-chip button:hover {
+  opacity: 1;
+}
+
+.tag-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-size: 0.8rem;
+  min-width: 80px;
+}
+
+.tag-input::placeholder {
+  color: #475569;
+}
+
+.word-count {
+  font-size: 0.72rem;
+  color: #475569;
+  white-space: nowrap;
+}
+
+/* ── Spin animation ──────────────────────────────────────────────── */
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Editor Toast ────────────────────────────────────────────────── */
+.editor-toast {
+  position: absolute;
+  bottom: 4rem;
+  right: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  animation: slideIn 0.2s ease;
+  z-index: 10;
+}
+
+.editor-toast.success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.editor-toast.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.editor-toast.info {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #818cf8;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
